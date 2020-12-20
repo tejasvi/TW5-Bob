@@ -175,6 +175,7 @@ exports.startup = function() {
 
     // TODO make this handle deleting .meta files
     $tw.Bob.DeleteTiddler = function (folder, filename, prefix) {
+      $tw.Bob.logger.log('$tw.Bob.DeleteTiddler() on ', filename, {level: 3})
       const itemPath = path.join(folder, filename);
       // Get the file name because it isn't always the same as the tiddler
       // title.
