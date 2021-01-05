@@ -70,7 +70,7 @@ exports.startup = function() {
 				// The item doesn't exist, so it was removed
 				// If the file doesn't exist anymore remove it from the wiki
 				if(['.tid', '.meta'].indexOf(fileExtension) !== -1) {
-				  $tw.Bob.logger.log('Tiddler file deleted:', filename, {level: 3})
+				  $tw.Bob.logger.log('Invoke $tw.Bob.DeleteTiddler() on ENOENT ', filename, {level: 3})
 				  $tw.Bob.DeleteTiddler(folder, filename, prefix);
 				} else {
 				  $tw.Bob.logger.log('non-tiddler file deleted:', filename, {level: 3})
