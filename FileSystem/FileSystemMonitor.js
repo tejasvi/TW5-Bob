@@ -62,6 +62,7 @@ exports.startup = function() {
             // The file extension, if no file extension than an empty string
             const fileExtension = path.extname(filename);
             if(err) {
+		  $tw.Bob.logger.log('Sleep: ', err, {level: 3})
 		  sleep(1000).then(() => {fs.stat(itemPath, function(err, fileStats) {
 			if(err) {
 			      // The item doesn't exist
@@ -69,6 +70,7 @@ exports.startup = function() {
 				// The item doesn't exist, so it was removed
 				// If the file doesn't exist anymore remove it from the wiki
 				if(['.tid', '.meta'].indexOf(fileExtension) !== -1) {
+				  $tw.Bob.logger.log('Tiddler file deleted:', filename, {level: 3})
 				  $tw.Bob.DeleteTiddler(folder, filename, prefix);
 				} else {
 				  $tw.Bob.logger.log('non-tiddler file deleted:', filename, {level: 3})
@@ -106,7 +108,7 @@ exports.startup = function() {
                     tiddlerObject = $tw.loadTiddlersFromFile(itemPath);
                   } catch (e) {
                     if(e.code !== 'ENOENT') {
-                      $tw.Bob.logger.error(e, {level: 3})
+                      $tw.Bob.logger.error('Exception: ', e, {level: 3})
                     }
                     // If we reach here the file doesn't exist for other reasons and we don't need to do anything
                     return
@@ -152,6 +154,7 @@ exports.startup = function() {
                         }
                         // Create the new tiddler
                         const newTiddler = $tw.Bob.Shared.normalizeTiddler({fields: tiddlerObject.tiddlers[0]});
+			$tw.Bob.logger.log('Unlink ', itemPath, ' and now create ', newTiddler);
                         // Save the new file
                         $tw.syncadaptor.saveTiddler(newTiddler, prefix);
                       });
@@ -175,7 +178,7 @@ exports.startup = function() {
 
     // TODO make this handle deleting .meta files
     $tw.Bob.DeleteTiddler = function (folder, filename, prefix) {
-      $tw.Bob.logger.log('$tw.Bob.DeleteTiddler() on ', filename, {level: 3})
+      $tw.Bob.logger.log('Send $tw.Bob.DeleteTiddler() to browsers ', filename, {level: 3})
       const itemPath = path.join(folder, filename);
       // Get the file name because it isn't always the same as the tiddler
       // title.
