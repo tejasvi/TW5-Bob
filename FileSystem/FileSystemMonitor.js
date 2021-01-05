@@ -150,11 +150,12 @@ exports.startup = function() {
 
                       fs.unlink(itemPath, (err)=>{
                         if(err) {
+                          $tw.Bob.logger.log('Unlink error: ', err, itemPath);
                           // nothing, error if the tiddler doesn't exist just means the monitor is most likely fighting with another syncer like git.
                         }
                         // Create the new tiddler
                         const newTiddler = $tw.Bob.Shared.normalizeTiddler({fields: tiddlerObject.tiddlers[0]});
-			$tw.Bob.logger.log('Unlink ', itemPath, ' and now create ', newTiddler);
+                        $tw.Bob.logger.log('Unlink ', itemPath, ' and now create ', newTiddler);
                         // Save the new file
                         $tw.syncadaptor.saveTiddler(newTiddler, prefix);
                       });
