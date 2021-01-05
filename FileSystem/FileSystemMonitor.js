@@ -62,26 +62,21 @@ exports.startup = function() {
             // The file extension, if no file extension than an empty string
             const fileExtension = path.extname(filename);
             if(err) {
-		  $tw.Bob.logger.log('Sleep: ', err, {level: 3})
-		  sleep(1000).then(() => {fs.stat(itemPath, function(err, fileStats) {
-			if(err) {
-			      // The item doesn't exist
-			      if(err.code === 'ENOENT') {
-				// The item doesn't exist, so it was removed
-				// If the file doesn't exist anymore remove it from the wiki
-				if(['.tid', '.meta'].indexOf(fileExtension) !== -1) {
-				  $tw.Bob.logger.log('Invoke $tw.Bob.DeleteTiddler() on ENOENT ', filename, {level: 3})
-				  $tw.Bob.DeleteTiddler(folder, filename, prefix);
-				} else {
-				  $tw.Bob.logger.log('non-tiddler file deleted:', filename, {level: 3})
-				}
-			      } else if(err.code === 'EACCES') {
-				// Permissions error
-			      } else {
-				// Some other error
-			      }
-			}
-		  });})
+              // The item doesn't exist
+              if(err.code === 'ENOENT') {
+                // The item doesn't exist, so it was removed
+                // If the file doesn't exist anymore remove it from the wiki
+                if(['.tid', '.meta'].indexOf(fileExtension) !== -1) {
+			    $tw.Bob.logger.log('Invoke $tw.Bob.DeleteTiddler() on ENOENT ', filename, {level: 3})
+                  $tw.Bob.DeleteTiddler(folder, filename, prefix);
+                } else {
+                  $tw.Bob.logger.log('non-tiddler file deleted:', filename, {level: 3})
+                }
+              } else if(err.code === 'EACCES') {
+                // Permissions error
+              } else {
+                // Some other error
+              }
             } else {
               // Item exists
               // If it is a new folder than watch that folder too
