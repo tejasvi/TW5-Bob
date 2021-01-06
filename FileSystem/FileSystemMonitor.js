@@ -24,10 +24,6 @@ exports.synchronous = true;
 exports.startup = function() {
   $tw.settings = $tw.settings || {};
 
-  function sleep (millis) {
-    return new Promise(resolve => setTimeout(resolve, millis));
-  }
-
   if($tw.node && $tw.settings.disableFileWatchers !== 'yes') {
     // require the fs module if we are running node
     const fs = require("fs");
