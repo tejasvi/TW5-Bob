@@ -55,6 +55,9 @@ exports.startup = function() {
       $tw.Bob.Wikis[prefix].watchers = $tw.Bob.Wikis[prefix].watchers || {};
       try {
         $tw.Bob.Wikis[prefix].watchers[folder] = fs.watch(folder, function (eventType, filename) {
+          if (filename == '4913') {
+              return
+          }
           filename = filename || "";
           // The full path to the current item
           const itemPath = path.join(folder, filename);
