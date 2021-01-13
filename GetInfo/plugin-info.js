@@ -35,7 +35,7 @@ exports.getPluginInfo = function() {
             const pluginNames = fs.readdirSync(path.join(pluginPath,pluginAuthor));
             pluginNames.forEach(function(pluginName) {
               // Check if directories have a valid plugin.info
-              if(!pluginInfo[pluginAuthor + '/' + pluginName] && $tw.utils.isDirectory(path.resolve(pluginPath,pluginAuthor,pluginName))) {
+              if(!pluginAuthor[0] !== '.' && !pluginInfo[pluginAuthor + '/' + pluginName] && $tw.utils.isDirectory(path.resolve(pluginPath,pluginAuthor,pluginName))) {
                 let info = false;
                 try {
                   info = JSON.parse(fs.readFileSync(path.resolve(pluginPath,pluginAuthor, pluginName,"plugin.info"),"utf8"));
